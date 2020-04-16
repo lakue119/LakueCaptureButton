@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kakaolink_host">kakaolink</string>
+    <string name="tedpermission_close">Close</string>
+    <string name="tedpermission_confirm">Confirm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="tedpermission_setting">Setting</string>
+</resources>
