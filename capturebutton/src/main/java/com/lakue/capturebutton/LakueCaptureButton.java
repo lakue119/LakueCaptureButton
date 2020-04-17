@@ -34,7 +34,7 @@ public class LakueCaptureButton extends FrameLayout {
     private static final int PERMISSION_REQUEST_CODE = 200;
     CaptureType selType = CaptureType.CAPTURE_TYPE_ACTIVITY;
     String folderName = "/ScreenShot";
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE};//, Manifest.permission.ACCESS_COARSE_LOCATION
+    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};//, Manifest.permission.ACCESS_COARSE_LOCATION
     public LakueCaptureButton(Context context) {
         super(context);
         init();

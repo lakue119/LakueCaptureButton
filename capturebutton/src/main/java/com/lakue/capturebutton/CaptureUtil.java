@@ -8,13 +8,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.util.LruCache;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,13 +59,30 @@ public class CaptureUtil {
      * 액티비티 전체 캡쳐
      * @param context
      */
+
+    public static String download_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LovelyMarket6";
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void captureActivity(Activity context, String folderName) {
         if(context == null) return;
+        File file;
         String strFolderPath = Environment.getExternalStorageDirectory().getAbsolutePath() + folderName;
-        File file = new File(strFolderPath);
+
+        if( Build.VERSION.SDK_INT < 29) file = new File(strFolderPath);
+        else file = context.getExternalFilesDir(folderName);
+
+//        File file = new File(download_path);
         if (!file.exists()) {
             file.mkdirs();
         }
+
+        ParcelFileDescriptor parcelFileDescriptor = null;
+        try {
+            parcelFileDescriptor = context.getContentResolver().openFileDescriptor(Uri.parse(download_path),"r",null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        FileInputStream inputStream  = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
 
         SimpleDateFormat day = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
