@@ -78,7 +78,7 @@ public class CaptureUtil {
 
         ParcelFileDescriptor parcelFileDescriptor = null;
         try {
-            parcelFileDescriptor = context.getContentResolver().openFileDescriptor(Uri.parse(download_path),"r",null);
+            parcelFileDescriptor = context.getContentResolver().openFileDescriptor(Uri.fromFile(file),"r",null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

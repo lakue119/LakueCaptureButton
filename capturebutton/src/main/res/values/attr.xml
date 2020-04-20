@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CaptureLayout">
+        <attr name="src" format="reference|integer" />
+    </declare-styleable>
+</resources>

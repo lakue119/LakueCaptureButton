@@ -7,9 +7,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import com.lakue.capturebutton.Permission.ModulePermission;
@@ -30,11 +33,13 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static androidx.core.app.ActivityCompat.requestPermissions;
 import static androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale;
 
-public class LakueCaptureButton extends FrameLayout {
+public class LakueCaptureButton extends LinearLayout {
     private static final int PERMISSION_REQUEST_CODE = 200;
     CaptureType selType = CaptureType.CAPTURE_TYPE_ACTIVITY;
     String folderName = "/ScreenShot";
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};//, Manifest.permission.ACCESS_COARSE_LOCATION
+    View view;
+    Button btn_capture;
     public LakueCaptureButton(Context context) {
         super(context);
         init();
@@ -43,21 +48,30 @@ public class LakueCaptureButton extends FrameLayout {
     public LakueCaptureButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
+        getAttrs(attrs);
     }
 
     public LakueCaptureButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+        getAttrs(attrs);
     }
 
     public void init(){
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        Button btnCapture = new Button(getContext());
-        btnCapture.setLayoutParams(params);
+//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        Button btnCapture = new Button(getContext());
+//        btnCapture.setLayoutParams(params);
+//
+//        this.addView(btnCapture);
+        String infService = Context.LAYOUT_INFLATER_SERVICE;
+        LayoutInflater li = (LayoutInflater) getContext().getSystemService(infService);
+        view = li.inflate(R.layout.capture_layout, this, false);
+        addView(view);
 
-        this.addView(btnCapture);
+        btn_capture = view.findViewById(R.id.btn_capture);
 
-        btnCapture.setOnClickListener(new OnClickListener() {
+
+        btn_capture.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 cameraCapture();
@@ -65,6 +79,24 @@ public class LakueCaptureButton extends FrameLayout {
         });
 
     }
+
+    private void getAttrs(AttributeSet attrs) {
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CaptureLayout);
+        setTypeArray(typedArray);
+    }
+
+    private void getAttrs(AttributeSet attrs, int defStyle) {
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CaptureLayout, defStyle, 0);
+        setTypeArray(typedArray);
+    }
+
+    private void setTypeArray(TypedArray typedArray) {
+        int bg_resID = typedArray.getResourceId(R.styleable.CaptureLayout_src, R.drawable.fp_b_camera);
+
+        btn_capture.setBackgroundResource(bg_resID);
+        typedArray.recycle();
+    }
+
 
     public void setFolderName(String folder_name){
         this.folderName = folder_name;
