@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.LruCache;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,6 +103,7 @@ public class CaptureUtil {
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + strFolderPath + "/Capture" + day.format(date) + ".JPEG")));
             fos.flush();
             fos.close();
+            Toast.makeText(context, "캡쳐 완료", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

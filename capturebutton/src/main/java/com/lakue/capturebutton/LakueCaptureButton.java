@@ -36,7 +36,7 @@ import static androidx.core.app.ActivityCompat.shouldShowRequestPermissionRation
 public class LakueCaptureButton extends LinearLayout {
     private static final int PERMISSION_REQUEST_CODE = 200;
     CaptureType selType = CaptureType.CAPTURE_TYPE_ACTIVITY;
-    String folderName = "/ScreenShot";
+    String folderName = "/Screenshots";
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};//, Manifest.permission.ACCESS_COARSE_LOCATION
     View view;
     Button btn_capture;
